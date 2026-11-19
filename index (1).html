@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Óptica Aurora · Exámenes de la vista y aros</title>
+<meta name="description" content="Concepto de sitio para una óptica: exámenes de la vista, catálogo con cotizador, citas en línea y asistente virtual.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Familjen+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F8F7;
+  --white:#FFFFFF;
+  --ink:#1A2230;
+  --ink-soft:#4A5566;
+  --line:#D6DEDC;
+  --coat:#5B4FC9;      /* reflejo violeta del antirreflejo */
+  --coat-soft:#ECEAFB;
+  --sea:#2F7F74;       /* reflejo verde del antirreflejo */
+  --sea-soft:#E3F1EE;
+  --warn:#B23A48;
+  --display:"Zilla Slab", Georgia, serif;
+  --body:"Familjen Grotesk", "Segoe UI", system-ui, sans-serif;
+  --r-sm:6px; --r-md:14px; --r-lg:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);font-size:17px;line-height:1.55;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--coat);outline-offset:3px;border-radius:4px}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- Header ---------- */
+.top{position:sticky;top:0;z-index:40;background:rgba(245,248,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:700;font-size:1.35rem;letter-spacing:-.01em}
+.brand svg{width:44px}
+.nav{display:flex;gap:28px;list-style:none}
+.nav a{text-decoration:none;color:var(--ink-soft);font-weight:500}
+.nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font-weight:600;border-radius:999px;padding:13px 24px;transition:background .2s,transform .2s}
+.btn-ink{background:var(--ink);color:var(--white)}
+.btn-ink:hover{background:#2C3850}
+.btn-line{background:transparent;border:1.5px solid var(--ink);color:var(--ink)}
+.btn-line:hover{background:var(--white)}
+.btn:active{transform:scale(.98)}
+.menu-btn{display:none;background:none;border:0;cursor:pointer;padding:8px}
+@media (max-width:860px){
+  .nav{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--line);padding:8px 20px 16px}
+  .nav.open{display:flex}
+  .nav a{display:block;padding:12px 0}
+  .menu-btn{display:block}
+  .top .btn{display:none}
+}
+
+/* ---------- Hero: cartilla de agudeza visual ---------- */
+.hero{padding:72px 0 88px;border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.chart{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:44px 28px 36px;text-align:center;position:relative}
+.chart h1{font-family:var(--display);font-weight:700;line-height:1.02;letter-spacing:.06em}
+.chart .row{display:block;transition:filter 1.1s ease, opacity 1.1s ease}
+.chart .r1{font-size:clamp(4.5rem,11vw,8.5rem)}
+.chart .r2{font-size:clamp(2.8rem,6.6vw,5.1rem)}
+.chart .r3{font-size:clamp(1.9rem,4.4vw,3.4rem)}
+.chart .r4{font-size:clamp(1.3rem,2.8vw,2.1rem);letter-spacing:.14em}
+.chart .r5{font-size:clamp(.95rem,1.9vw,1.35rem);letter-spacing:.22em;color:var(--ink-soft)}
+.chart .meta{display:flex;justify-content:space-between;margin-top:22px;padding-top:14px;border-top:1px dashed var(--line);font-size:.85rem;color:var(--ink-soft)}
+.blur .row{filter:blur(9px);opacity:.55}
+.lens-hint{position:absolute;right:-34px;bottom:-46px;width:150px;pointer-events:none}
+.hero-copy p.lead{font-size:1.22rem;color:var(--ink-soft);max-width:34ch;margin:0 0 30px}
+.hero-copy h2{font-family:var(--display);font-weight:600;font-size:clamp(2rem,3.6vw,2.8rem);line-height:1.1;margin-bottom:18px;max-width:16ch}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.facts{display:flex;gap:28px;margin-top:40px;list-style:none;flex-wrap:wrap}
+.facts li{font-size:.95rem;color:var(--ink-soft);max-width:15ch}
+.facts strong{display:block;font-family:var(--display);font-size:1.5rem;color:var(--ink)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.lens-hint{display:none}}
+
+/* ---------- Secciones ---------- */
+section{padding:96px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:40px;flex-wrap:wrap}
+.sec-head h2{font-family:var(--display);font-weight:600;font-size:clamp(2rem,3.4vw,2.7rem);line-height:1.1}
+.sec-head p{color:var(--ink-soft);max-width:44ch}
+
+/* ---------- Catálogo ---------- */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.chip{border:1.5px solid var(--line);background:var(--white);border-radius:999px;padding:8px 16px;cursor:pointer;font-weight:500;color:var(--ink-soft)}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--white)}
+.shop{display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+.frame{background:var(--white);padding:22px 18px 18px;cursor:pointer;border:0;text-align:left;display:flex;flex-direction:column;gap:6px;position:relative}
+.frame .pic{height:96px;display:grid;place-items:center;margin-bottom:8px}
+.frame .pic svg{width:86%;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.frame:hover .pic svg,.frame:focus-visible .pic svg{transform:perspective(500px) rotateY(-18deg) translateY(-3px)}
+.frame .brandname{font-size:.82rem;color:var(--ink-soft)}
+.frame .name{font-family:var(--display);font-weight:600;font-size:1.15rem}
+.frame .price{font-weight:600}
+.frame[aria-pressed="true"]{background:var(--coat-soft)}
+.frame[aria-pressed="true"]::after{content:"Elegido";position:absolute;top:12px;right:12px;background:var(--coat);color:#fff;font-size:.75rem;font-weight:600;padding:3px 9px;border-radius:999px}
+
+.quote{position:sticky;top:92px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:26px}
+.quote h3{font-family:var(--display);font-size:1.45rem;font-weight:600;margin-bottom:4px}
+.quote .sub{color:var(--ink-soft);font-size:.95rem;margin-bottom:20px}
+.quote fieldset{border:0;margin-bottom:18px}
+.quote legend{font-weight:600;margin-bottom:8px;font-size:.95rem}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border:1.5px solid var(--line);border-radius:var(--r-sm);margin-bottom:6px;cursor:pointer;font-size:.95rem}
+.opt:has(input:checked){border-color:var(--coat);background:var(--coat-soft)}
+.opt input{accent-color:var(--coat);margin-right:8px}
+.opt span:last-child{color:var(--ink-soft);white-space:nowrap}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:16px;margin:6px 0 16px}
+.total strong{font-family:var(--display);font-size:1.9rem}
+.quote .btn{width:100%}
+.quote .empty{color:var(--ink-soft);font-size:.95rem;padding:14px;border:1.5px dashed var(--line);border-radius:var(--r-sm);margin-bottom:18px}
+@media (max-width:960px){.shop{grid-template-columns:1fr}.quote{position:static}}
+@media (max-width:560px){.grid{grid-template-columns:1fr 1fr}.frame{padding:16px 12px}.frame .pic{height:70px}.frame .name{font-size:1.02rem}}
+
+/* ---------- Examen ---------- */
+.exam{background:var(--ink);color:var(--white)}
+.exam .sec-head p{color:#B9C3D3}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;border-top:2px solid #3A4760;padding-top:18px}
+.steps li::before{content:counter(s);font-family:var(--display);font-size:2.4rem;font-weight:700;color:#8E86E6;display:block;margin-bottom:6px}
+.steps h3{font-size:1.1rem;margin-bottom:6px}
+.steps p{color:#B9C3D3;font-size:.97rem}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* ---------- Citas ---------- */
+.book{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:start}
+.book-aside p{color:var(--ink-soft);margin-bottom:16px;max-width:38ch}
+.form{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:30px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-weight:600;font-size:.95rem}
+.field input,.field select{border:1.5px solid var(--line);border-radius:var(--r-sm);padding:11px 12px;background:var(--paper)}
+.field input:focus,.field select:focus{border-color:var(--coat);outline:none;background:var(--white)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:6px}
+.slot{border:1.5px solid var(--line);background:var(--paper);border-radius:var(--r-sm);padding:8px 0;cursor:pointer;font-weight:500}
+.slot[aria-pressed="true"]{background:var(--sea);border-color:var(--sea);color:#fff}
+.slot:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.hint{font-size:.9rem;color:var(--ink-soft)}
+.err{color:var(--warn);font-size:.9rem;min-height:1.2em}
+.ok{grid-column:1/-1;background:var(--sea-soft);border:1px solid #BFDDD6;border-radius:var(--r-sm);padding:16px 18px}
+.ok strong{display:block;margin-bottom:4px}
+@media (max-width:860px){.book{grid-template-columns:1fr}.form{grid-template-columns:1fr}}
+
+/* ---------- Sucursales ---------- */
+.branches{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.branch{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:28px}
+.branch h3{font-family:var(--display);font-size:1.5rem;font-weight:600;margin-bottom:8px}
+.branch p{color:var(--ink-soft);margin-bottom:14px}
+.branch dl{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;margin-bottom:20px;font-size:.97rem}
+.branch dt{font-weight:600}
+.branch .links{display:flex;gap:8px;flex-wrap:wrap}
+.branch .links a{font-size:.92rem;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;text-decoration:none;font-weight:500}
+.branch .links a:hover{border-color:var(--ink)}
+@media (max-width:760px){.branches{grid-template-columns:1fr}}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);padding:36px 0;color:var(--ink-soft);font-size:.92rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.linkbtn{background:none;border:0;cursor:pointer;text-decoration:underline;color:var(--ink-soft)}
+
+/* ---------- Asistente ---------- */
+.fab{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;background:var(--coat);color:#fff;border:0;border-radius:999px;padding:12px 20px 12px 14px;cursor:pointer;font-weight:600;box-shadow:0 10px 30px rgba(91,79,201,.35)}
+.fab svg{width:28px}
+.chat{position:fixed;right:22px;bottom:88px;z-index:60;width:min(380px,calc(100vw - 32px));height:min(560px,calc(100vh - 120px));background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:0 24px 60px rgba(26,34,48,.22);display:none;flex-direction:column;overflow:clip}
+.chat.open{display:flex}
+.chat-head{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.chat-head strong{font-family:var(--display);font-size:1.15rem}
+.chat-head span{display:block;font-size:.82rem;color:var(--ink-soft)}
+.x{background:none;border:0;cursor:pointer;font-size:1.5rem;line-height:1;padding:4px 8px;color:var(--ink-soft)}
+.msgs{flex:1;min-height:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--paper)}
+.msg{max-width:86%;padding:10px 13px;border-radius:14px;font-size:.95rem;line-height:1.45}
+.msg.bot{background:var(--white);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--ink);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg img.up{width:120px;border-radius:8px;margin-top:4px}
+.matches{display:grid;gap:6px;margin-top:8px}
+.match{display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:8px;padding:6px 8px;border:0;cursor:pointer;text-align:left;width:100%}
+.match svg{width:64px;flex:none}
+.match small{display:block;color:var(--ink-soft)}
+.quick{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;padding:10px 12px 2px;scrollbar-width:none}
+.quick::-webkit-scrollbar{display:none}
+.quick button{flex:none;border:1.5px solid var(--line);background:var(--white);border-radius:999px;padding:5px 11px;font-size:.85rem;cursor:pointer}
+.chat-in{display:flex;gap:6px;padding:12px;border-top:1px solid var(--line);align-items:center}
+.chat-in input[type=text]{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:999px;padding:10px 14px}
+.icon-btn{position:relative;overflow:hidden;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:var(--white);cursor:pointer;display:grid;place-items:center;flex:none}
+.icon-btn.send{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* ---------- Panel admin ---------- */
+dialog{border:0;border-radius:var(--r-md);padding:0;max-width:min(860px,calc(100vw - 32px));width:100%;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(26,34,48,.55)}
+.dlg{padding:28px}
+.dlg h2{font-family:var(--display);font-weight:600;font-size:1.6rem;margin-bottom:6px}
+.dlg .row-end{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.pin{display:flex;gap:10px;margin:18px 0 6px}
+.pin input{width:100%;font-size:1.6rem;letter-spacing:.5em;text-align:center;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:10px}
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin-top:16px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--ink-soft);font-weight:600}
+.tbl-wrap{max-height:55vh;overflow:auto}
+.del{background:none;border:1.5px solid #E6C3C8;color:var(--warn);border-radius:999px;padding:4px 12px;cursor:pointer;font-size:.85rem}
+.stats{display:flex;gap:28px;margin-top:10px;color:var(--ink-soft)}
+.stats b{font-family:var(--display);font-size:1.4rem;color:var(--ink);margin-right:4px}
+
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;z-index:80;transition:.3s;pointer-events:none;font-weight:500}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .blur .row{filter:none;opacity:1}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="Óptica Aurora, inicio">
+      <svg viewBox="0 0 64 28" aria-hidden="true"><circle cx="15" cy="14" r="11" fill="none" stroke="#1A2230" stroke-width="3"/><circle cx="49" cy="14" r="11" fill="none" stroke="#1A2230" stroke-width="3"/><path d="M26 13c2-3 10-3 12 0" fill="none" stroke="#1A2230" stroke-width="3"/><path d="M9 10a7 7 0 0 1 6-3" stroke="#5B4FC9" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M43 10a7 7 0 0 1 6-3" stroke="#2F7F74" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+      Óptica Aurora
+    </a>
+    <button class="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav" id="nav">
+      <li><a href="#catalogo">Aros y cotizador</a></li>
+      <li><a href="#examen">Examen de la vista</a></li>
+      <li><a href="#citas">Citas</a></li>
+      <li><a href="#sucursales">Sucursales</a></li>
+    </ul>
+    <a class="btn btn-ink" href="#citas">Agendar examen</a>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- HERO -->
+  <section class="hero" style="padding-top:64px">
+    <div class="wrap">
+      <div class="chart blur" id="chart">
+        <h1 aria-label="Vea cada detalle con claridad">
+          <span class="row r1" aria-hidden="true">E</span>
+          <span class="row r2" aria-hidden="true">VEA</span>
+          <span class="row r3" aria-hidden="true">CADA</span>
+          <span class="row r4" aria-hidden="true">DETALLE CON</span>
+          <span class="row r5" aria-hidden="true">CLARIDAD Y ESTILO</span>
+        </h1>
+        <div class="meta" aria-hidden="true"><span>20/200</span><span>20/100</span><span>20/50</span><span>20/20</span></div>
+        <svg class="lens-hint" viewBox="0 0 160 80" aria-hidden="true">
+          <circle cx="40" cy="40" r="30" fill="rgba(91,79,201,.08)" stroke="#1A2230" stroke-width="4"/>
+          <circle cx="120" cy="40" r="30" fill="rgba(47,127,116,.08)" stroke="#1A2230" stroke-width="4"/>
+          <path d="M70 36c6-6 14-6 20 0" fill="none" stroke="#1A2230" stroke-width="4"/>
+        </svg>
+      </div>
+
+      <div class="hero-copy">
+        <h2>Su examen de la vista y sus aros, en un mismo lugar.</h2>
+        <p class="lead">Medimos su vista con equipo digital, le ayudamos a elegir el aro y le entregamos los lentes listos.</p>
+        <div class="hero-actions">
+          <a class="btn btn-ink" href="#citas">Agendar examen</a>
+          <a class="btn btn-line" href="#catalogo">Cotizar aros</a>
+        </div>
+        <ul class="facts">
+          <li><strong>2</strong>sucursales en el GAM</li>
+          <li><strong>30 min</strong>dura el examen</li>
+          <li><strong>12</strong>modelos en el catálogo</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section id="catalogo">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Elija un aro y cotice sus lentes</h2>
+        <p>Toque un modelo para agregarlo a la cotización. Los precios incluyen el aro; el lente se suma según su receta.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar por marca" id="filters"></div>
+      <div class="shop">
+        <div class="grid" id="grid"></div>
+        <aside class="quote" aria-labelledby="q-title">
+          <h3 id="q-title">Su cotización</h3>
+          <p class="sub" id="q-frame">Todavía no ha elegido un aro.</p>
+          <fieldset>
+            <legend>Tipo de lente</legend>
+            <label class="opt"><span><input type="radio" name="lens" value="0" checked>Solo el aro</span><span>₡0</span></label>
+            <label class="opt"><span><input type="radio" name="lens" value="35000">Monofocal</span><span>₡35.000</span></label>
+            <label class="opt"><span><input type="radio" name="lens" value="62000">Bifocal</span><span>₡62.000</span></label>
+            <label class="opt"><span><input type="radio" name="lens" value="98000">Progresivo</span><span>₡98.000</span></label>
+          </fieldset>
+          <fieldset>
+            <legend>Tratamientos</legend>
+            <label class="opt"><span><input type="checkbox" name="coat" value="18000">Antirreflejo</span><span>₡18.000</span></label>
+            <label class="opt"><span><input type="checkbox" name="coat" value="15000">Filtro de luz azul</span><span>₡15.000</span></label>
+            <label class="opt"><span><input type="checkbox" name="coat" value="42000">Fotocromático</span><span>₡42.000</span></label>
+          </fieldset>
+          <div class="total"><span>Total estimado</span><strong id="q-total">₡0</strong></div>
+          <a class="btn btn-ink" href="#citas" id="q-book">Agendar examen con esta cotización</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAMEN -->
+  <section class="exam" id="examen">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Cómo es el examen</h2>
+        <p>Dura unos 30 minutos. Si usa lentes, tráigalos para comparar su graduación actual.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Conversación inicial</h3><p>Le preguntamos cómo ve de lejos y de cerca, y qué molestias tiene.</p></li>
+        <li><h3>Medición digital</h3><p>Medimos su graduación con autorrefractómetro.</p></li>
+        <li><h3>Prueba con cartilla</h3><p>Afinamos la receta lente por lente hasta que lea con comodidad.</p></li>
+        <li><h3>Elección del aro</h3><p>Le ayudamos a escoger el aro y el lente según su receta y su presupuesto.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CITAS -->
+  <section id="citas">
+    <div class="wrap book">
+      <div class="book-aside">
+        <div class="sec-head" style="margin-bottom:18px"><h2>Agende su examen</h2></div>
+        <p>Escoja la sucursal, el día y la hora. Atendemos de lunes a sábado.</p>
+        <p class="hint">Este es un sitio de demostración: la cita se guarda en este navegador y aparece en el panel del equipo.</p>
+      </div>
+      <form class="form" id="form" novalidate>
+        <div class="field full">
+          <label for="f-name">Nombre completo</label>
+          <input id="f-name" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-mail">Correo electrónico</label>
+          <input id="f-mail" name="mail" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="f-phone">Teléfono</label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="8888-8888">
+        </div>
+        <div class="field">
+          <label for="f-branch">Sucursal</label>
+          <select id="f-branch" name="branch" required>
+            <option value="Escazú">Escazú</option>
+            <option value="Heredia">Heredia</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-date">Fecha</label>
+          <input id="f-date" name="date" type="date" required>
+        </div>
+        <div class="field full">
+          <span style="font-weight:600;font-size:.95rem" id="slots-label">Hora</span>
+          <div class="slots" id="slots" role="group" aria-labelledby="slots-label"></div>
+          <span class="hint" id="slots-hint">Elija una fecha para ver las horas disponibles.</span>
+        </div>
+        <div class="field full">
+          <p class="err" id="f-err" role="alert"></p>
+          <button class="btn btn-ink" type="submit">Reservar cita</button>
+        </div>
+        <div class="ok" id="f-ok" hidden></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- SUCURSALES -->
+  <section id="sucursales" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2>Sucursales</h2></div>
+      <div class="branches">
+        <article class="branch">
+          <h3>Escazú</h3>
+          <p>Centro comercial, segundo piso, frente a la plazoleta.</p>
+          <dl><dt>Lun a vie</dt><dd>9:00 a 18:00</dd><dt>Sábado</dt><dd>9:00 a 17:00</dd></dl>
+          <div class="links">
+            <a href="https://www.google.com/maps/search/?api=1&query=Escaz%C3%BA%2C%20Costa%20Rica" target="_blank" rel="noopener">Google Maps</a>
+            <a href="https://waze.com/ul?q=Escaz%C3%BA%2C%20Costa%20Rica" target="_blank" rel="noopener">Waze</a>
+          </div>
+        </article>
+        <article class="branch">
+          <h3>Heredia</h3>
+          <p>A 100 metros del parque central, contiguo a la farmacia.</p>
+          <dl><dt>Lun a vie</dt><dd>9:00 a 18:00</dd><dt>Sábado</dt><dd>8:00 a 12:00</dd></dl>
+          <div class="links">
+            <a href="https://www.google.com/maps/search/?api=1&query=Heredia%2C%20Costa%20Rica" target="_blank" rel="noopener">Google Maps</a>
+            <a href="https://waze.com/ul?q=Heredia%2C%20Costa%20Rica" target="_blank" rel="noopener">Waze</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Óptica Aurora es una marca ficticia. Proyecto de portafolio de Luis Franco Solano Ballestero.</span>
+    <button class="linkbtn" id="open-admin">Acceso del equipo</button>
+  </div>
+</footer>
+
+<!-- Asistente -->
+<button class="fab" id="fab" aria-expanded="false" aria-controls="chat">
+  <svg viewBox="0 0 40 24" aria-hidden="true"><circle cx="10" cy="12" r="8" fill="none" stroke="#fff" stroke-width="2.5"/><circle cx="30" cy="12" r="8" fill="none" stroke="#fff" stroke-width="2.5"/><path d="M18 11c1-2 3-2 4 0" fill="none" stroke="#fff" stroke-width="2.5"/></svg>
+  Pregúntele a Iris
+</button>
+<div class="chat" id="chat" role="dialog" aria-label="Asistente Iris">
+  <div class="chat-head">
+    <div><strong>Iris</strong><span>Asistente de Óptica Aurora</span></div>
+    <button class="x" id="chat-close" aria-label="Cerrar asistente">×</button>
+  </div>
+  <div class="msgs" id="msgs" aria-live="polite"></div>
+  <div class="quick" id="quick"></div>
+  <form class="chat-in" id="chat-form">
+    <label class="icon-btn" title="Buscar aros con una foto">
+      <input type="file" accept="image/*" id="photo" class="sr">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span class="sr">Buscar aros con una foto</span>
+    </label>
+    <label class="sr" for="chat-text">Escriba su pregunta</label>
+    <input type="text" id="chat-text" placeholder="Escriba su pregunta" autocomplete="off">
+    <button class="icon-btn send" type="submit" aria-label="Enviar">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </form>
+</div>
+
+<!-- Panel del equipo -->
+<dialog id="admin">
+  <div class="dlg" id="admin-body"></div>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ================= Datos ================= */
+const BRANDS = ["Nórdica","Volcán","Pacífico","Atelier Sur"];
+const FRAMES = [
+  {id:1, brand:"Nórdica", name:"Fiordo", shape:"round", color:"#1F2933", price:54000},
+  {id:2, brand:"Nórdica", name:"Abeto", shape:"rect", color:"#7A5230", price:61000},
+  {id:3, brand:"Nórdica", name:"Hielo", shape:"round", color:"#C9D6DF", price:58000},
+  {id:4, brand:"Volcán", name:"Arenal", shape:"cat", color:"#8E2F3B", price:72000},
+  {id:5, brand:"Volcán", name:"Poás", shape:"rect", color:"#2E2E2E", price:66000},
+  {id:6, brand:"Volcán", name:"Irazú", shape:"aviator", color:"#B8913F", price:84000},
+  {id:7, brand:"Pacífico", name:"Marea", shape:"round", color:"#2F6F8F", price:49000},
+  {id:8, brand:"Pacífico", name:"Coral", shape:"cat", color:"#D9827A", price:52000},
+  {id:9, brand:"Pacífico", name:"Bahía", shape:"rect", color:"#3E7D5A", price:47000},
+  {id:10,brand:"Atelier Sur", name:"Carey", shape:"cat", color:"#6B3E1F", price:89000},
+  {id:11,brand:"Atelier Sur", name:"Plata", shape:"aviator", color:"#9AA3AB", price:95000},
+  {id:12,brand:"Atelier Sur", name:"Noche", shape:"rect", color:"#1B2A4A", price:78000},
+];
+const money = n => "₡" + n.toLocaleString("es-CR").replace(/\s/g,".").replace(/,/g,".");
+const LS_KEY = "aurora_citas";
+const ADMIN_PIN = "2468";
+
+/* Dibuja un aro en SVG según forma y color */
+function frameSVG(f){
+  const c=f.color, s=6;
+  const lens = {
+    round:(x)=>`<circle cx="${x}" cy="30" r="20" fill="rgba(255,255,255,.35)" stroke="${c}" stroke-width="${s}"/>`,
+    rect:(x)=>`<rect x="${x-24}" y="13" width="48" height="34" rx="7" fill="rgba(255,255,255,.35)" stroke="${c}" stroke-width="${s}"/>`,
+    cat:(x,l)=>`<path d="M${x-25} ${l?18:14} Q${x} 6 ${x+25} ${l?14:18} Q${x+22} 46 ${x} 46 Q${x-22} 46 ${x-25} ${l?18:14}Z" fill="rgba(255,255,255,.35)" stroke="${c}" stroke-width="${s}" stroke-linejoin="round"/>`,
+    aviator:(x)=>`<path d="M${x-24} 14 H${x+24} Q${x+26} 44 ${x} 48 Q${x-26} 44 ${x-24} 14Z" fill="rgba(255,255,255,.35)" stroke="${c}" stroke-width="${s-2}" stroke-linejoin="round"/>`
+  }[f.shape];
+  const bridge = f.shape==="aviator"
+    ? `<path d="M56 16 Q70 8 84 16" fill="none" stroke="${c}" stroke-width="3"/><path d="M48 14 H92" stroke="${c}" stroke-width="3"/>`
+    : `<path d="M54 26 Q70 16 86 26" fill="none" stroke="${c}" stroke-width="${s-1}" stroke-linecap="round"/>`;
+  const arms = `<path d="M8 20 L0 16" stroke="${c}" stroke-width="${s-1}" stroke-linecap="round"/><path d="M132 20 L140 16" stroke="${c}" stroke-width="${s-1}" stroke-linecap="round"/>`;
+  return `<svg viewBox="-4 0 148 60" aria-hidden="true">${arms}${lens(32,true)}${lens(108,false)}${bridge}</svg>`;
+}
+
+/* ================= Navegación móvil ================= */
+const menuBtn=document.querySelector(".menu-btn"), nav=document.getElementById("nav");
+menuBtn.addEventListener("click",()=>{const o=nav.classList.toggle("open");menuBtn.setAttribute("aria-expanded",o)});
+nav.addEventListener("click",e=>{if(e.target.tagName==="A"){nav.classList.remove("open");menuBtn.setAttribute("aria-expanded",false)}});
+
+/* ================= Hero: la cartilla se enfoca ================= */
+const chart=document.getElementById("chart");
+const rows=[...chart.querySelectorAll(".row")];
+if(matchMedia("(prefers-reduced-motion: reduce)").matches){chart.classList.remove("blur")}
+else{
+  rows.forEach(r=>{r.style.filter="blur(9px)";r.style.opacity=".55"});
+  chart.classList.remove("blur");
+  rows.forEach((r,i)=>setTimeout(()=>{r.style.filter="blur(0)";r.style.opacity="1"},350+i*260));
+}
+
+/* ================= Catálogo y cotizador ================= */
+let brandFilter="Todas", chosen=null;
+const filtersEl=document.getElementById("filters"), gridEl=document.getElementById("grid");
+function renderFilters(){
+  filtersEl.innerHTML=["Todas",...BRANDS].map(b=>`<button class="chip" aria-pressed="${b===brandFilter}" data-b="${b}">${b}</button>`).join("");
+}
+function renderGrid(){
+  const list=FRAMES.filter(f=>brandFilter==="Todas"||f.brand===brandFilter);
+  gridEl.innerHTML=list.map(f=>`
+    <button class="frame" data-id="${f.id}" aria-pressed="${chosen&&chosen.id===f.id}" aria-label="${f.name}, ${f.brand}, ${money(f.price)}">
+      <div class="pic">${frameSVG(f)}</div>
+      <span class="brandname">${f.brand}</span>
+      <span class="name">${f.name}</span>
+      <span class="price">${money(f.price)}</span>
+    </button>`).join("");
+}
+filtersEl.addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;brandFilter=b.dataset.b;renderFilters();renderGrid()});
+gridEl.addEventListener("click",e=>{const b=e.target.closest(".frame");if(!b)return;selectFrame(+b.dataset.id)});
+function selectFrame(id){
+  chosen=FRAMES.find(f=>f.id===id);
+  renderGrid();updateQuote();
+}
+function updateQuote(){
+  const lens=+document.querySelector('input[name=lens]:checked').value;
+  const coats=[...document.querySelectorAll('input[name=coat]:checked')].reduce((a,i)=>a+ +i.value,0);
+  const total=(chosen?chosen.price:0)+lens+coats;
+  document.getElementById("q-frame").textContent=chosen?`${chosen.name} de ${chosen.brand}: ${money(chosen.price)}`:"Todavía no ha elegido un aro.";
+  document.getElementById("q-total").textContent=money(total);
+}
+document.querySelector(".quote").addEventListener("change",updateQuote);
+renderFilters();renderGrid();updateQuote();
+
+/* ================= Citas ================= */
+const getCitas=()=>{try{return JSON.parse(localStorage.getItem(LS_KEY))||[]}catch{return[]}};
+const setCitas=a=>{try{localStorage.setItem(LS_KEY,JSON.stringify(a))}catch{}};
+const form=document.getElementById("form"), dateIn=document.getElementById("f-date"), branchIn=document.getElementById("f-branch");
+const slotsEl=document.getElementById("slots"), slotsHint=document.getElementById("slots-hint"), errEl=document.getElementById("f-err"), okEl=document.getElementById("f-ok");
+let slot=null;
+const pad=n=>String(n).padStart(2,"0");
+const today=new Date(); dateIn.min=`${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+function hoursFor(branch,dateStr){
+  const d=new Date(dateStr+"T12:00");
+  const day=d.getDay(); if(day===0) return [];
+  let start=9,end=18;
+  if(day===6){ if(branch==="Heredia"){start=8;end=12} else {end=17} }
+  const out=[];for(let h=start;h<end;h++){out.push(`${pad(h)}:00`,`${pad(h)}:30`)}
+  return out;
+}
+function renderSlots(){
+  slot=null;
+  if(!dateIn.value){slotsEl.innerHTML="";slotsHint.textContent="Elija una fecha para ver las horas disponibles.";return}
+  const hs=hoursFor(branchIn.value,dateIn.value);
+  if(!hs.length){slotsEl.innerHTML="";slotsHint.textContent="Los domingos no atendemos. Elija otro día.";return}
+  const taken=getCitas().filter(c=>c.branch===branchIn.value&&c.date===dateIn.value).map(c=>c.time);
+  const now=new Date(), isToday=dateIn.value===dateIn.min;
+  slotsEl.innerHTML=hs.map(h=>{
+    const past=isToday&&(+h.slice(0,2)*60+ +h.slice(3))<=now.getHours()*60+now.getMinutes();
+    const off=taken.includes(h)||past;
+    return `<button type="button" class="slot" data-h="${h}" aria-pressed="false" ${off?"disabled":""}>${h}</button>`}).join("");
+  slotsHint.textContent="Las horas tachadas ya están ocupadas.";
+}
+dateIn.addEventListener("change",renderSlots);branchIn.addEventListener("change",renderSlots);
+slotsEl.addEventListener("click",e=>{const b=e.target.closest(".slot");if(!b||b.disabled)return;
+  slotsEl.querySelectorAll(".slot").forEach(s=>s.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");slot=b.dataset.h});
+form.addEventListener("submit",e=>{
+  e.preventDefault();errEl.textContent="";
+  const name=form.name.value.trim(), mail=form.mail.value.trim(), phone=form.phone.value.trim();
+  if(name.length<3){errEl.textContent="Escriba su nombre completo.";form.name.focus();return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){errEl.textContent="Revise el correo: debe tener el formato nombre@dominio.com.";form.mail.focus();return}
+  if(!dateIn.value){errEl.textContent="Elija la fecha de la cita.";dateIn.focus();return}
+  if(!slot){errEl.textContent="Elija una hora disponible.";return}
+  const cita={id:Date.now(),name,mail,phone,branch:branchIn.value,date:dateIn.value,time:slot,
+    quote:chosen?`${chosen.name} (${chosen.brand}), total ${document.getElementById("q-total").textContent}`:"",created:new Date().toISOString()};
+  setCitas([...getCitas(),cita]);
+  const fecha=new Date(cita.date+"T12:00").toLocaleDateString("es-CR",{weekday:"long",day:"numeric",month:"long"});
+  okEl.hidden=false;
+  okEl.innerHTML=`<strong>Cita reservada</strong>${cita.name}, lo esperamos el ${fecha} a las ${cita.time} en la sucursal de ${cita.branch}. En la versión en producción se envía una confirmación a ${cita.mail}.`;
+  form.reset();renderSlots();toast("Cita reservada");
+});
+
+/* ================= Panel del equipo ================= */
+const dlg=document.getElementById("admin"), dlgBody=document.getElementById("admin-body");
+document.getElementById("open-admin").addEventListener("click",()=>{renderPin();dlg.showModal()});
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+function renderPin(){
+  dlgBody.innerHTML=`<h2>Acceso del equipo</h2><p class="hint">Ingrese el PIN de 4 dígitos.</p>
+    <form id="pin-form"><div class="pin"><label class="sr" for="pin">PIN</label><input id="pin" inputmode="numeric" maxlength="4" autocomplete="off"></div>
+    <p class="err" id="pin-err" role="alert"></p>
+    <div class="row-end"><button type="button" class="btn btn-line" id="pin-cancel">Cancelar</button><button class="btn btn-ink">Entrar</button></div></form>`;
+  document.getElementById("pin").focus();
+  document.getElementById("pin-cancel").onclick=()=>dlg.close();
+  document.getElementById("pin-form").onsubmit=e=>{e.preventDefault();
+    if(document.getElementById("pin").value===ADMIN_PIN) renderPanel();
+    else{document.getElementById("pin-err").textContent="PIN incorrecto. Intente de nuevo.";document.getElementById("pin").select()}};
+}
+function renderPanel(){
+  const citas=getCitas().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  const t=dateIn.min, hoy=citas.filter(c=>c.date===t).length, fut=citas.filter(c=>c.date>=t).length;
+  dlgBody.innerHTML=`<h2>Citas agendadas</h2>
+    <div class="stats"><span><b>${hoy}</b>hoy</span><span><b>${fut}</b>próximas</span><span><b>${citas.length}</b>en total</span></div>
+    ${citas.length?`<div class="tbl-wrap"><table><thead><tr><th>Fecha</th><th>Hora</th><th>Sucursal</th><th>Cliente</th><th>Cotización</th><th></th></tr></thead><tbody>
+    ${citas.map(c=>`<tr><td>${c.date}</td><td>${c.time}</td><td>${c.branch}</td><td>${esc(c.name)}<br><small>${esc(c.mail)}${c.phone?" · "+esc(c.phone):""}</small></td><td>${esc(c.quote)||"—"}</td><td><button class="del" data-id="${c.id}">Cancelar cita</button></td></tr>`).join("")}
+    </tbody></table></div>`:`<p class="hint" style="margin-top:16px">Todavía no hay citas. Las que se reserven en el formulario aparecen aquí.</p>`}
+    <div class="row-end"><button class="btn btn-ink" id="panel-close">Cerrar</button></div>`;
+  document.getElementById("panel-close").onclick=()=>dlg.close();
+  dlgBody.querySelectorAll(".del").forEach(b=>b.onclick=()=>{setCitas(getCitas().filter(c=>c.id!==+b.dataset.id));renderPanel();renderSlots();toast("Cita cancelada")});
+}
+const esc=s=>String(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+
+/* ================= Asistente Iris ================= */
+const FAQ=[
+  {k:["horario","hora","abren","cierran","atienden"],a:"Escazú: lunes a viernes de 9:00 a 18:00 y sábados de 9:00 a 17:00. Heredia: lunes a viernes de 9:00 a 18:00 y sábados de 8:00 a 12:00. Los domingos no abrimos."},
+  {k:["donde","ubicacion","direccion","sucursal","llegar"],a:"Tenemos dos sucursales: Escazú y Heredia. En la sección Sucursales encuentra los enlaces a Google Maps y Waze."},
+  {k:["cita","agendar","reservar","examen"],a:"Puede agendar en la sección Citas: elige sucursal, fecha y hora, y listo. El examen dura unos 30 minutos."},
+  {k:["precio examen","cuesta el examen","costo examen","cobran examen"],a:"El examen de la vista cuesta ₡15.000, y se lo rebajamos si compra sus lentes con nosotros."},
+  {k:["dura","cuanto tarda","tiempo examen"],a:"El examen dura unos 30 minutos."},
+  {k:["entrega","listos","cuando","tardan","demora"],a:"Los lentes monofocales están listos en 3 a 5 días hábiles. Los progresivos tardan de 7 a 10 días hábiles."},
+  {k:["progresivo","progresivos"],a:"Los progresivos le permiten ver de lejos, intermedio y cerca con un solo lente. Cuestan desde ₡98.000 más el aro."},
+  {k:["bifocal"],a:"El bifocal tiene dos zonas: una para lejos y otra para leer. Cuesta ₡62.000 más el aro."},
+  {k:["monofocal"],a:"El monofocal corrige una sola distancia, de lejos o de cerca. Cuesta ₡35.000 más el aro."},
+  {k:["antirreflejo","reflejo"],a:"El antirreflejo reduce los brillos en pantallas y al manejar de noche. Cuesta ₡18.000."},
+  {k:["luz azul","pantalla","computadora","celular"],a:"El filtro de luz azul ayuda si pasa muchas horas frente a pantallas. Cuesta ₡15.000."},
+  {k:["fotocromatico","sol","oscurecen","transitions"],a:"Los fotocromáticos se oscurecen con el sol y se aclaran bajo techo. Cuestan ₡42.000."},
+  {k:["pago","tarjeta","sinpe","efectivo","pagar"],a:"Aceptamos efectivo, tarjeta y SINPE Móvil."},
+  {k:["garantia","se quebro","quebrado","reparar","arreglo"],a:"Los aros tienen 6 meses de garantía por defectos de fábrica. Ajustes y cambio de tornillos son gratis."},
+  {k:["marca","marcas","modelos","aros","catalogo"],a:"Trabajamos con Nórdica, Volcán, Pacífico y Atelier Sur. En la sección de aros puede filtrar por marca y cotizar."},
+  {k:["receta","otra optica","traer receta"],a:"Sí, puede traer la receta de otro profesional siempre que tenga menos de un año."},
+  {k:["niño","nino","niños","ninos","hijo"],a:"Atendemos niños desde los 5 años. Recomendamos un examen al entrar a la escuela."},
+  {k:["contacto","telefono","whatsapp","llamar"],a:"Este es un sitio de demostración. En la versión real aquí aparecería el teléfono y el WhatsApp de cada sucursal."},
+  {k:["foto","imagen","parecido","similar","buscar aro"],a:"Toque el botón de la cámara y suba una foto de unos lentes. Le muestro los modelos del catálogo de colores más parecidos."},
+];
+const QUICK=["¿Cuál es el horario?","¿Cuánto cuesta el examen?","¿Cuándo están listos mis lentes?","Buscar aros con una foto"];
+const msgs=document.getElementById("msgs"), chatEl=document.getElementById("chat"), fab=document.getElementById("fab");
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+function addMsg(html,who="bot"){const d=document.createElement("div");d.className="msg "+who;d.innerHTML=html;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d}
+function answer(q){
+  const n=norm(q);let best=null,score=0;
+  for(const f of FAQ){let s=0;for(const k of f.k){if(n.includes(norm(k)))s+=k.split(" ").length}if(s>score){score=s;best=f}}
+  return best?best.a:"No tengo esa respuesta. Puedo ayudarle con horarios, citas, precios de lentes, tratamientos, pagos y garantía.";
+}
+function openChat(){chatEl.classList.add("open");fab.setAttribute("aria-expanded","true");
+  if(!msgs.children.length){addMsg("Hola, soy Iris. Puedo responder preguntas sobre exámenes, lentes, precios y horarios, o buscar aros parecidos a una foto que me envíe.")}
+  document.getElementById("chat-text").focus()}
+fab.addEventListener("click",()=>chatEl.classList.contains("open")?closeChat():openChat());
+function closeChat(){chatEl.classList.remove("open");fab.setAttribute("aria-expanded","false");fab.focus()}
+document.getElementById("chat-close").addEventListener("click",closeChat);
+document.getElementById("quick").innerHTML=QUICK.map(q=>`<button type="button">${q}</button>`).join("");
+document.getElementById("quick").addEventListener("click",e=>{if(e.target.tagName!=="BUTTON")return;
+  if(e.target.textContent.startsWith("Buscar")){document.getElementById("photo").click();return}ask(e.target.textContent)});
+document.getElementById("chat-form").addEventListener("submit",e=>{e.preventDefault();const i=document.getElementById("chat-text");if(!i.value.trim())return;ask(i.value.trim());i.value=""});
+function ask(q){addMsg(esc(q),"me");setTimeout(()=>addMsg(esc(answer(q))),350)}
+
+/* Búsqueda visual: compara el color dominante de la foto con el color de cada aro */
+document.getElementById("photo").addEventListener("change",e=>{
+  const file=e.target.files[0];if(!file)return;
+  if(!file.type.startsWith("image/")){addMsg("Ese archivo no es una imagen. Suba una foto en JPG o PNG.");return}
+  const url=URL.createObjectURL(file);
+  addMsg(`Esta es mi foto:<br><img class="up" src="${url}" alt="Foto enviada">`,"me");
+  const img=new Image();img.onload=()=>{
+    const c=document.createElement("canvas"),W=80,H=Math.max(1,Math.round(80*img.height/img.width));c.width=W;c.height=H;
+    const x=c.getContext("2d");x.drawImage(img,0,0,W,H);const d=x.getImageData(0,0,W,H).data;
+    // Toma los píxeles con más color o más oscuros (el aro), ignora fondos claros
+    let r=0,g=0,b=0,n=0;
+    for(let i=0;i<d.length;i+=4){const R=d[i],G=d[i+1],B=d[i+2],mx=Math.max(R,G,B),mn=Math.min(R,G,B),lum=(R+G+B)/3;
+      if(lum<200&&(mx-mn>18||lum<90)){r+=R;g+=G;b+=B;n++}}
+    if(n<20){addMsg("No logré distinguir el aro en la foto. Pruebe con una foto más cercana y con fondo claro.");return}
+    r/=n;g/=n;b/=n;
+    const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+    const ranked=FRAMES.map(f=>{const[R,G,B]=hex(f.color);return{f,dist:Math.hypot(R-r,G-g,B-b)}}).sort((a,b)=>a.dist-b.dist).slice(0,3);
+    const m=addMsg(`Estos son los 3 modelos de color más parecido a su foto. Toque uno para agregarlo a la cotización.<div class="matches">${
+      ranked.map(({f})=>`<button class="match" data-id="${f.id}">${frameSVG(f)}<span><strong>${f.name}</strong><small>${f.brand} · ${money(f.price)}</small></span></button>`).join("")}</div>`);
+    m.querySelectorAll(".match").forEach(b=>b.onclick=()=>{selectFrame(+b.dataset.id);document.getElementById("catalogo").scrollIntoView();toast("Aro agregado a la cotización")});
+    URL.revokeObjectURL(url);
+  };img.src=url;e.target.value="";
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&chatEl.classList.contains("open"))closeChat()});
+
+/* ================= Toast ================= */
+let tt;function toast(t){const el=document.getElementById("toast");el.textContent=t;el.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>el.classList.remove("show"),2200)}
+</script>
+</body>
+</html>
