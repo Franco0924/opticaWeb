@@ -4,7 +4,7 @@ Sitio de una sola página para una óptica con dos sucursales: catálogo de aros
 
 **Óptica Aurora es una marca ficticia.** Este proyecto es un concepto basado en un sitio que desarrollé en colaboración para un cliente real. Los nombres, direcciones, marcas de aros y precios son de ejemplo.
 
-**Demo:** https://franco0924.github.io/optica-web/
+**Demo:** https://franco0924.github.io/opticaWeb/
 
 ## Funciones
 
